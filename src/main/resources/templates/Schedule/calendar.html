@@ -30,6 +30,8 @@
    <div class="layui-laydate-main" id="test-n2" lay-key="1"></div>
   </div>
  </div>
+ <br>
+ <button onclick="saveData()" type="button" class="layui-btn"> 提交全部记事</button>
 </div>
 
 <script>
@@ -55,7 +57,7 @@
     ,range: false
     ,value:date_value
     ,calendar: true
-    ,btns:false
+    ,btns:false  //['confirm']
     ,done: function(value, date, endDate){
      console.log(value); //得到日期生成的值，如：2017-08-18
      console.log(date); //得到日期时间对象：{year: 2017, month: 8, date: 18, hours: 0, minutes: 0, seconds: 0}
@@ -116,7 +118,7 @@
    $('#test-n2').html('');//重要！由于插件是嵌套指定容器，再次调用前需要清空原日历控件
    //添加属性
    markJson[obj_date] = chose_moban_val;
-
+   $("#map").val(JSON.stringify(markJson))
    //再次调用日历控件，
    loding_date(obj_date,markJson);//重要！，再标注一个日期后会刷新当前日期变为初始值，所以必须调用当前选定日期。
 
@@ -134,6 +136,30 @@
 
   }
 
- });</script>
+ });
+
+function saveData(){
+ $.ajax({
+  type: "POST",
+  url: "/Calendar/saveData",
+  data: {mapdata: $("#map").val()},
+  dataType: "json",
+  success: function (data) {
+
+   if(data.msg=="ok"){
+    console.log(data.data)
+
+   }else {
+    console.log(data.msg)
+   }
+  }
+ });
+
+
+
+}
+
+
+</script>
 </body>
 </html>
