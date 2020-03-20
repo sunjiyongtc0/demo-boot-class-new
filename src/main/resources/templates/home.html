@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <title>登峰造極</title>
+ <link rel="stylesheet" th:href="@{/layUI/css/layui.css}">
+ <script type="text/javascript"   th:src="@{/js/util/jquery.js}"></script>
+ <script type="text/javascript"   th:src="@{/js/util/jquery.min.js}"></script>
+
+<script>
+ //关闭所有lu
+ function ulHide(){
+  $(".layui-side-scroll ul").hide();
+ }
+
+ $(function () {
+  ulHide();
+  //用户管理
+  $("#pdc_manage").click(function () {
+   ulHide();
+   $("#pdc").show();
+   $("iframe").attr("src",  "/userMain");
+  });
+  //用户列表
+  $("#pdc_main").click(function () {
+   ulHide();
+   $("#pdc").show();
+   $("iframe").attr("src",  "/userMain");
+  });
+  //角色分配
+  $("#pdc_role").click(function () {
+   ulHide();
+   $("#pdc").show();
+   $("iframe").attr("src",  "/role/main");
+  });
+  //用户管理分配
+  $("#infor_mate").click(function () {
+   ulHide();
+   $("#pdc").show();
+   $("iframe").attr("src",  "/pdc/mateMain");
+  });
+  //我的用户信息
+  $("#infor_my").click(function () {
+   ulHide();
+   $("#pdc").show();
+   $("iframe").attr("src",  "/pdc/inforDetail/1");
+  });
+  //新建用户信息
+  $("#infor_creat").click(function () {
+   ulHide();
+   $("#pdc").show();
+   $("iframe").attr("src",  "/pdc/inforDetail/0");
+  });
+
+  //教务管理
+  $("#course_manage").click(function () {
+   ulHide();
+   $("#course").show();
+   $("iframe").attr("src", "/course/ClassMain");
+  });
+  //课程主页
+  $("#class_main").click(function () {
+   ulHide()
+   $("#course").show();
+   $("iframe").attr("src", "/course/ClassMain");
+  });
+  //课程创建
+  $("#class_creat").click(function () {
+   ulHide()
+   $("#course").show();
+   $("iframe").attr("src", "/course/addCourse");
+  });
+  //课程教师
+  $("#class_teach").click(function () {
+   ulHide()
+   $("#course").show();
+   $("iframe").attr("src", "/teach/main");
+  });
+  //课程报名
+  $("#class_join").click(function () {
+   ulHide()
+   $("#course").show();
+   $("iframe").attr("src", "/joinClass/joinMain");
+  });
+  //我的课程
+  $("#class_see").click(function () {
+   ulHide()
+   $("#course").show();
+   $("iframe").attr("src", "/joinClass/joinSee");
+  });
+
+
+//文件管理
+  $("#file_manage").click(function () {
+   // $(".layui-side-scroll").hide();
+   $("iframe").attr("src", "/fileload");
+  });
+  //教学论坛
+  $("#bbs_manage").click(function () {
+   ulHide()
+   $("#bbs").show();
+   $("iframe").attr("src", "/bbs/main");
+  });
+  //教学论坛主页
+  $("#bbs_main").click(function () {
+   ulHide()
+   $("#bbs").show();
+   $("iframe").attr("src", "/bbs/main");
+  });
+  //用户论坛
+  $("#bbs_user").click(function () {
+   ulHide()
+   $("#bbs").show();
+   $("iframe").attr("src", "/userbbs/main");
+  });
+  //论坛消息
+  $("#bbs_message").click(function () {
+   ulHide()
+   $("#bbs").show();
+   $("iframe").attr("src", "/userbbs/message");
+  });
+
+
+ });
+</script>
+</head>
+
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+ <div class="layui-header">
+  <div class="layui-logo">登峰造極</div>
+  <!-- 头部区域（可配合layui已有的水平导航） -->
+  <ul class="layui-nav layui-layout-left">
+   <li class="layui-nav-item"><a id="pdc_manage"    href="javascript:void(0)">用户管理</a></li>
+   <li class="layui-nav-item"><a href="/Calendar/main">行程管理</a></li>
+   <li class="layui-nav-item"><a id="course_manage"    href="javascript:void(0)">教务管理</a></li>
+   <li class="layui-nav-item"><a id ="file_manage"     href="javascript:void(0)">文件管理</a></li>
+   <li class="layui-nav-item"><a id ="bbs_manage"      href="javascript:void(0)">教学论坛</a></li>
+   <!--<li class="layui-nav-item">-->
+    <!--<a href="javascript:;">其它系统</a>-->
+    <!--<dl class="layui-nav-child">-->
+     <!--<dd><a href="">邮件管理</a></dd>-->
+     <!--<dd><a href="">消息管理</a></dd>-->
+     <!--<dd><a href="">授权管理</a></dd>-->
+    <!--</dl>-->
+   <!--</li>-->
+  </ul>
+  <ul class="layui-nav layui-layout-right">
+   <li class="layui-nav-item">
+    <a href="javascript:;">
+     <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+     <span th:text="${session.user.aliasName}"></span>
+    </a>
+    <dl class="layui-nav-child">
+     <dd><a href="">基本资料</a></dd>
+     <dd><a href="">安全设置</a></dd>
+    </dl>
+   </li>
+   <li class="layui-nav-item"><a href="/loginout">退出</a></li>
+  </ul>
+ </div>
+
+ <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+ <div class="layui-side layui-bg-black">
+  <div class="layui-side-scroll">
+    <!-- 论坛管理相关 -->
+   <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="bbs" id="bbs">
+    <li class="layui-nav-item layui-this"><a  id ="bbs_main"      href="javascript:void(0)"><i class="layui-icon"></i>论坛主页</a></li>
+    <li class="layui-nav-item"><a id ="bbs_user"      href="javascript:void(0)"><i class="layui-icon"></i>用户中心</a></li>
+    <li class="layui-nav-item"><a id ="bbs_message"   href="javascript:void(0)"><i class="layui-icon"></i>我的消息</a></li>
+    <span class="layui-nav-bar" style="top: 167.5px; height: 0px; opacity: 0;"></span>
+   </ul>
+   <!-- 教务管理相关 -->
+   <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="bbs" id="course">
+    <li class="layui-nav-item layui-this"><a  id ="class_main"      href="javascript:void(0)"><i class="layui-icon"></i>课程管理</a>
+      <dl class="layui-nav-child">
+       <dd><a id ="class_creat"      href="javascript:void(0)">创建课程</a></dd>
+       <dd><a id ="class_teach"      href="javascript:void(0)">课程教师</a></dd>
+      </dl>
+    </li>
+    <li class="layui-nav-item"><a id ="class_join"    href="javascript:void(0)"><i class="layui-icon"></i>课程报名</a></li>
+    <li class="layui-nav-item"><a id ="class_see"   href="javascript:void(0)"><i class="layui-icon"></i>我的课程</a></li>
+    <span class="layui-nav-bar" style="top: 167.5px; height: 0px; opacity: 0;"></span>
+   </ul>
+   <!-- 用户管理相关 -->
+   <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="bbs" id="pdc">
+    <li class="layui-nav-item layui-this"><a  id ="pdc_main"      href="javascript:void(0)"><i class="layui-icon"></i>用户列表</a></li>
+    <li class="layui-nav-item"><a id ="pdc_role"      href="javascript:void(0)"><i class="layui-icon"></i>角色分配</a></li>
+    <li class="layui-nav-item"><a id ="pdc_message"   href="javascript:void(0)"><i class="layui-icon"></i>用户信息</a>
+     <dl class="layui-nav-child">
+      <dd><a id ="infor_mate"      href="javascript:void(0)">匹配用户信息</a></dd>
+      <dd><a id ="infor_my"      href="javascript:void(0)">我的个人信息</a></dd>
+      <dd><a id ="infor_creat"      href="javascript:void(0)">新建个人信息</a></dd>
+     </dl>
+    </li>
+    <span class="layui-nav-bar" style="top: 167.5px; height: 0px; opacity: 0;"></span>
+   </ul>
+   <!--<ul class="layui-nav layui-nav-tree"  lay-filter="test">-->
+    <!--<li class="layui-nav-item layui-nav-itemed">-->
+     <!--<a class="" href="javascript:;">所有商品</a>-->
+     <!--<dl class="layui-nav-child">-->
+      <!--<dd><a href="javascript:;">列表一</a></dd>-->
+      <!--<dd><a href="javascript:;">列表二</a></dd>-->
+      <!--<dd><a href="javascript:;">列表三</a></dd>-->
+      <!--<dd><a href="">超链接</a></dd>-->
+     <!--</dl>-->
+    <!--</li>-->
+    <!--<li class="layui-nav-item">-->
+     <!--<a href="javascript:;">解决方案</a>-->
+     <!--<dl class="layui-nav-child">-->
+      <!--<dd><a href="javascript:;">列表一</a></dd>-->
+      <!--<dd><a href="javascript:;">列表二</a></dd>-->
+      <!--<dd><a href="">超链接</a></dd>-->
+     <!--</dl>-->
+    <!--</li>-->
+    <!--<li class="layui-nav-item"><a href="">云市场</a></li>-->
+    <!--<li class="layui-nav-item"><a href="">发布商品</a></li>-->
+   <!--</ul>-->
+  </div>
+ </div>
+
+ <div class="layui-body">
+  <!-- 内容主体区域 -->
+  <!--<div style="padding: 15px;">-->
+   <iframe src="/fileload" style="width: 100%;height: 100%;border: 0px"></iframe>
+  <!--</div>-->
+
+ </div>
+
+ <div class="layui-footer">
+  <!-- 底部固定区域 -->
+  © superman-SUN - 底部固定区域
+ </div>
+</div>
+<script th:src="@{layUI/layui.js}"></script>
+<script>
+ //JavaScript代码区域
+ layui.use('element', function(){
+  var element = layui.element;
+
+ });
+</script>
+</body>
+</html>
+<!--<meta http-equiv="Content-Type" content="text/html; charset=utf-8">-->
+<!--<title>YOUNG-DEMO</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<a href="/userMain">用户管理</a>-->
+<!--<br>-->
+<!--<a   href="/role/main">角色管理</a>-->
+<!--<br>-->
+<!--<a   href="/course/main">课程管理</a>-->
+<!--<br>-->
+<!--<a   href="/fileload">文件管理</a>-->
+<!--<br>-->
+<!--<a     href="/trace">点击跳转trace页面</a>-->
+<!--<br>-->
+<!--<a     href="/world_Map">点击跳转world页面</a>-->
+<!--<br>-->
+<!--<a  href="/Yun_Map"> 点击跳转云基地专项监测 </a>-->
+<!--</body>-->
+<!--</html>-->

@@ -1,0 +1,9 @@
+辽宁联通      通用版------------》E:\JAVACODE\SYliantong\QI_ROOT8.5\qi_v4    （myeclipse 8.5启动）
+
+联通集团      线上版------------》E:\JAVACODE\集团备份
+
+浙江移动      线上版------------》E:\JAVACODE\Workspaces
+
+联通备份      本地版------------》E:\JAVACODE\simplejf
+
+联通数据推送  本地交互版--------》E:\JAVACODE\simplejf\eystar-softprobe

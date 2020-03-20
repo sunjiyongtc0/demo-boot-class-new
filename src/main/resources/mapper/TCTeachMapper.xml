@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sunjy.secret.boot.mapper.TCTeachMapper">
+  <resultMap id="BaseResultMap" type="com.sunjy.secret.boot.domain.TCTeach">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="course_id" jdbcType="BIGINT" property="courseId" />
+    <result column="teach_id" jdbcType="BIGINT" property="teachId" />
+    <result column="student_id" jdbcType="VARCHAR" property="studentId" />
+  </resultMap>
+</mapper>

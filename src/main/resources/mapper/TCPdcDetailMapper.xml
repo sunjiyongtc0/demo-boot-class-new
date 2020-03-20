@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sunjy.secret.boot.mapper.TCPdcDetailMapper">
+  <resultMap id="BaseResultMap" type="com.sunjy.secret.boot.domain.TCPdcDetail">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="pdc_name" jdbcType="VARCHAR" property="pdcName" />
+    <result column="gender" jdbcType="INTEGER" property="gender" />
+    <result column="contact" jdbcType="VARCHAR" property="contact" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="creed" jdbcType="VARCHAR" property="creed" />
+    <result column="education" jdbcType="VARCHAR" property="education" />
+    <result column="photo_path" jdbcType="VARCHAR" property="photoPath" />
+    <result column="archives_path" jdbcType="VARCHAR" property="archivesPath" />
+    <result column="flat_id" jdbcType="INTEGER" property="flatId" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+</mapper>

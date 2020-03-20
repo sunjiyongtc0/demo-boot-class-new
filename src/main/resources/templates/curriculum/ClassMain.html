@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+ <title>登峰造極</title>
+ <link rel="stylesheet" th:href="@{/layUI/css/layui.css}">
+ <script type="text/javascript"   th:src="@{/js/util/jquery.js}"></script>
+ <script type="text/javascript"   th:src="@{/js/util/jquery.min.js}"></script>
+ <script type="text/javascript"   th:src="@{/layUI/lay/modules/table.js}"></script>
+ <script type="text/javascript"   th:src="@{/layUI/layui.js}"></script>
+ <script type="text/javascript"   th:src="@{/layUI/layui.all.js}"></script>
+</head>
+<body>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+ <legend>课程管理</legend>
+</fieldset>
+<table class="layui-hide" id="test" lay-filter="test"></table>
+
+<script type="text/html" id="toolbarDemo">
+ <div class="layui-btn-container">
+  <!--<button class="layui-btn layui-btn-sm" lay-event="CreatData">新建课程</button>-->
+ </div>
+</script>
+<script type="text/html" id="barDemo">
+ <a class="layui-btn layui-btn-xs" lay-event="edit">教师分配</a>
+ <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script>
+ layui.use('table', function() {
+  var table = layui.table;
+  table.render({
+   elem: '#test'
+   ,url:'/course/getjsonData'
+   , toolbar: '#toolbarDemo'
+   , title: '用户数据表'
+   // , totalRow: true
+   , cols: [
+            [
+             {type: 'checkbox', fixed: 'left'}
+             ,{field:'couerseName', title:'课程名称'}
+             ,{field:'chargesUnit', title:'课时（学时）'}
+             ,{field:'chargesAmount', title:'金额（元）'}
+             ,{field:'flatId', title:'是否启用',templet: function(res){
+              if(res.flatId==0){return '启用'}else{return '禁用'}
+             }}
+             ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+            ]
+           ]
+   , page: true
+  });
+
+  // //工具栏事件
+  // table.on('toolbar(test)', function(obj){
+  //  var checkStatus = table.checkStatus(obj.config.id);
+  //  if(obj.event=='CreatData'){
+  //   window.location.href="/course/addCourse";
+  //  }
+  // });
+
+  ///监听行工具事件
+  table.on('tool(test)',  function(obj){
+   var data = obj.data;
+   if(obj.event === 'del'){
+    layer.confirm('真的删除行么', function(index){
+     obj.del();
+     layer.close(index);
+    });
+   } else if(obj.event === 'edit'){
+    window.location.href="/teach/set/"+data.id;
+   }
+  });
+
+ })
+</script>
+
+</body>
+</html>

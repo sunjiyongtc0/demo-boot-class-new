@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+ <title>登峰造極</title>
+ <link rel="stylesheet" th:href="@{/layUI/css/layui.css}">
+ <script type="text/javascript"   th:src="@{/js/util/jquery.js}"></script>
+ <script type="text/javascript"   th:src="@{/js/util/jquery.min.js}"></script>
+ <script type="text/javascript"   th:src="@{/layUI/lay/modules/form.js}"></script>
+ <script type="text/javascript"   th:src="@{/layUI/layui.js}"></script>
+ <script type="text/javascript"   th:src="@{/layUI/layui.all.js}"></script>
+</head>
+<body>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+ <legend>用户信息详情</legend>
+</fieldset>
+<form class="layui-form" method="post" action="/pdc/addinfor"   id="form">
+ <input type="hidden" name="id" id="id" th:if="${type eq 'update'}"   th:value="${tp.Id}" >
+  <div class="layui-form-item">
+  <label class="layui-form-label">用户名称：</label>
+  <div class="layui-input-block" th:if="${type eq 'add'}" >
+   <input type="text" name="pdcName" lay-verify="title"    autocomplete="off" placeholder="请输入用户名称" class="layui-input">
+  </div>
+   <div class="layui-input-block" th:if="${type eq 'update'}" >
+    <input type="text" name="pdcName" lay-verify="title"   th:value="${tp.pdcName}" autocomplete="off" placeholder="请输入用户名称" class="layui-input">
+   </div>
+ </div>
+ <div class="layui-form-item">
+  <label class="layui-form-label">选择性别：</label>
+  <div class="layui-input-block">
+   <input type="checkbox" checked=""    lay-skin="switch" lay-filter="switchSex" lay-text="男|女">
+  </div>
+ </div>
+ <span th:if="${type eq 'add'}" >
+ <input type="hidden"  id="gender" name="gender"  value=0 >
+</span>
+ <span th:if="${type eq 'update'}" >
+ <input type="hidden"  id="gender" name="gender"  value=0 th:value="${tp.gender}">
+</span>
+
+ <div class="layui-form-item">
+  <label class="layui-form-label">联系方式：</label>
+  <div class="layui-input-block" th:if="${type eq 'add'}" >
+   <input type="text" name="contact" lay-verify="title"  autocomplete="off" placeholder="请输入联系方式" class="layui-input">
+  </div>
+  <div class="layui-input-block" th:if="${type eq 'update'}" >
+   <input type="text" name="contact" lay-verify="title" th:value="${tp.contact}" autocomplete="off" placeholder="请输入联系方式" class="layui-input">
+  </div>
+ </div>
+
+ <div class="layui-form-item">
+  <label class="layui-form-label">电子邮箱：</label>
+  <div class="layui-input-block" th:if="${type eq 'add'}" >
+   <input type="text" name="email" lay-verify="title"  autocomplete="off" placeholder="请输入电子邮箱" class="layui-input">
+  </div>
+  <div class="layui-input-block" th:if="${type eq 'update'}" >
+   <input type="text" name="email" lay-verify="title" th:value="${tp.email}" autocomplete="off" placeholder="请输入电子邮箱" class="layui-input">
+  </div>
+ </div>
+
+ <div class="layui-form-item">
+  <label class="layui-form-label">个性签名：</label>
+  <div class="layui-input-block" th:if="${type eq 'add'}" >
+   <input type="text" name="creed" lay-verify="title"    autocomplete="off" placeholder="请输入个性签名" class="layui-input">
+  </div>
+  <div class="layui-input-block" th:if="${type eq 'update'}" >
+   <input type="text" name="creed" lay-verify="title"  th:value="${tp.creed}"  autocomplete="off" placeholder="请输入个性签名" class="layui-input">
+  </div>
+ </div>
+
+ <div class="layui-form-item">
+  <label class="layui-form-label">学历：</label>
+  <div class="layui-input-block" th:if="${type eq 'add'}" >
+   <input type="text" name="education" lay-verify="title"  autocomplete="off" placeholder="请输入学历" class="layui-input">
+  </div>
+  <div class="layui-input-block" th:if="${type eq 'update'}" >
+   <input type="text" name="education" lay-verify="title" th:value="${tp.education}" autocomplete="off" placeholder="请输入学历" class="layui-input">
+  </div>
+ </div>
+
+ <div class="layui-form-item">
+  <label class="layui-form-label">头像：</label>
+  <div class="layui-upload">
+   <button type="button" class="layui-btn" id="test1" name="file">上传图片</button>
+   <div class="layui-upload-list">
+    <img class="layui-upload-img" id="demo1">
+    <p id="demoText"></p>
+   </div>
+  </div>
+  <span  th:if="${type eq 'add'}" >
+     <input type="hidden" id="photo_path" name="photoPath" >
+  </span>
+  <span  th:if="${type eq 'update'}" >
+     <input type="hidden" id="photo_path" name="photoPath" th:value="${tp.photoPath}">
+  </span>
+
+  <!--<div class="layui-input-block">-->
+   <!--<input type="text" name="photo_path" lay-verify="title" autocomplete="off" placeholder="请输入学历" class="layui-input">-->
+  <!--</div>-->
+ </div>
+
+ <div class="layui-form-item">
+  <label class="layui-form-label">简历：</label>
+  <div class="layui-upload">
+   <button type="button" class="layui-btn layui-btn-normal" id="test8">选择文件</button>
+   <button type="button" class="layui-btn" id="test9">开始上传</button>
+  </div>
+  <span th:if="${type eq 'add'}" >
+     <input type="hidden" id="archives_path" name="archivesPath"  >
+  </span>
+  <span th:if="${type eq 'update'}" >
+     <input type="hidden" id="archives_path" name="archivesPath"  th:value="${tp.archivesPath}">
+  </span>
+
+  <!--<div class="layui-input-block">-->
+   <!--<input type="text" name="archives_path" lay-verify="title" autocomplete="off" placeholder="请输入学历" class="layui-input">-->
+  <!--</div>-->
+ </div>
+
+ <div class="layui-form-item">
+  <label class="layui-form-label">是否启用：</label>
+  <div class="layui-input-block">
+   <input type="checkbox" checked=""    lay-skin="switch" lay-filter="switchTest" lay-text="ON|OFF">
+  </div>
+ </div>
+ <span th:if="${type eq 'add'}"><input type="hidden"  id="flatId" name="flatId"  value=0 ></span>
+ <span th:if="${type eq 'update'}"><input type="hidden"  id="flatId" name="flatId"  value=0 th:value="${tp.flatId}"></span>
+
+
+ <div class="layui-form-item" th:if="${type eq 'add'}">
+  <div class="layui-input-block">
+   <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+   <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+  </div>
+ </div>
+ <div class="layui-form-item" th:if="${type eq 'update'}">
+  <div class="layui-input-block">
+   <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即更新</button>
+  </div>
+ </div>
+</form>
+
+<script>
+
+ if([[${type eq 'update'}]]){
+ var pdcId=$("#id");
+  $(".layui-form").append('<input type="hidden" name="id" value="' + pdcId + '" id="pdcId"> ');
+  // $("#addf").hide();
+  // $("#upadef").show();
+  $("#form").attr("action","/pdc/updateteacher");
+ }
+ layui.use(['form', 'layedit', 'laydate'], function(){
+  var form = layui.form
+          ,layer = layui.layer
+          ,layedit = layui.layedit
+          ,laydate = layui.laydate;
+  //监听指定开关
+  form.on('switch(switchTest)', function(data){
+   // this.checked ? data.value=0:data.value=1;
+   if(this.checked){
+    $("#flatId").val(0)
+   }else{
+    $("#flatId").val(1)
+   }
+
+  });
+  form.on('switch(switchSex)', function(data){
+   this.checked ? $("#gender").val(0):$("#gender").val(1);
+  });
+  form.render();
+});
+</script>
+<script>
+
+
+
+ layui.use('upload', function(){
+  var $ = layui.jquery
+          ,upload = layui.upload;
+
+  //普通图片上传
+  var uploadInst = upload.render({
+   elem: '#test1'
+   ,url: '/imageUpload' //改成您自己的上传接口
+   ,exts: 'jpg|png|jpeg|gif'//设置可上传文件
+   ,before: function(obj){
+    //预读本地文件示例，不支持ie8
+    obj.preview(function(index, file, result){
+     $('#demo1').attr('src', result); //图片链接（base64）
+    });
+   }
+   ,done: function(res){
+    //如果上传失败
+    if(res.code > 0){
+     return layer.msg('上传失败');
+    }
+    if(res.code==0) {
+     //上传成功
+     $("#photo_path").val(res.data)
+    }
+
+   }
+   ,error: function(){
+    //演示失败状态，并实现重传
+    var demoText = $('#demoText');
+    demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+    demoText.find('.demo-reload').on('click', function(){
+     uploadInst.upload();
+    });
+   }
+  });
+  //上传文件
+  upload.render({
+   elem: '#test8'
+   ,url: '/upload' //改成您自己的上传接口
+   ,auto: false
+   ,exts:'txt|doc|xlsx'
+   //,multiple: true
+   ,bindAction: '#test9'
+   ,done: function(res){
+    layer.msg('上传成功');
+    //如果上传失败
+    if(res.code > 0){
+     return layer.msg('上传失败');
+    }
+    if(res.code==0) {
+     //上传成功
+     $("#archives_path").val(res.data)
+     console.log($("#archives_path").val())
+    }
+   }
+  });
+
+
+
+ });
+</script>
+
+</body>
+</html>

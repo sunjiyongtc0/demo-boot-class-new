@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sunjy.secret.boot.mapper.TCCourseMapper">
+  <resultMap id="BaseResultMap" type="com.sunjy.secret.boot.domain.TCCourse">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="couerse_name" jdbcType="VARCHAR" property="couerseName" />
+    <result column="charges_amount" jdbcType="REAL" property="chargesAmount" />
+    <result column="charges_unit" jdbcType="VARCHAR" property="chargesUnit" />
+    <result column="flat_id" jdbcType="INTEGER" property="flatId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="dis_count" jdbcType="REAL" property="disCount" />
+    <result column="teach_id" jdbcType="VARCHAR" property="teachId" />
+    <result column="distribute_user_id" jdbcType="BIGINT" property="distributeUserId" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+</mapper>

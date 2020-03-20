@@ -1,0 +1,46 @@
+--------------TBbsCommentMapper
+            @Select("SELECT bc.creat_time creat_time,bc.remark remark ,pu.alias_name  alias_name FROM  t_bbs_comment bc INNER JOIN t_p_user pu ON bc.user_id =pu.id WHERE bc.flat_id=0 AND bc.title_id=#{id}")
+            public List<Map<String,String>> detailAll(@Param("id") Long tid);
+
+            @Select("SELECT pu.alias_name alias_name,bc.remark , TIMESTAMPDIFF(DAY,bc.creat_time,NOW())+1 DAY FROM t_bbs_comment bc INNER JOIN t_p_user pu ON bc.user_id=pu.id INNER JOIN t_bbs_title  bt ON bt.id=bc.title_id WHERE bt.user_id=#{id}")
+            public List<Map<String,String>> callBack(@Param("id") Long tid);
+---------------TBbsTitleMapper
+        @Select("SELECT   bt.id id,pu.alias_name alias_name,bt.creat_time creat_time,bt.title_name title_name FROM t_bbs_title bt INNER JOIN t_p_user pu ON bt.user_id=pu.id WHERE  bt.flat_id=0  ")
+        public List<Map<String,String>> titleBbs();
+        @Select("SELECT   bt.id id,pu.alias_name alias_name,bt.creat_time creat_time,bt.title_name title_name FROM t_bbs_title bt INNER JOIN t_p_user pu ON bt.user_id=pu.id WHERE  bt.flat_id=0 AND bt.user_id=#{id}")
+        public List<Map<String,String>> creatTitleBbs(@Param("id")long id);
+        @Select("SELECT DISTINCT bt.id id, bt.title_name ,bt.remark ,pu.alias_name ,bt.creat_time creat_time FROM t_bbs_title  bt INNER JOIN t_bbs_comment bc ON bt.id=bc.title_id INNER JOIN t_p_user pu ON bt.user_id=pu.id  WHERE bt.flat_id=0 AND bc.user_id=#{id}")
+        public List<Map<String,String>> joinTitleBbs(@Param("id")long id);
+---------------TCCourseMapper
+        @Update("update t_c_course set teach_id=#{t.teachId},distribute_user_id= #{t.distributeUserId},update_time=#{t.updateTime}  where id=#{t.id}")
+        public int updateCouerse(@Param("t") TCCourse t);
+
+            @Select("SELECT cc.couerse_name,cc.charges_amount,cc.charges_unit ,pd.pdc_name,pd.photo_path FROM t_c_teach ct INNER JOIN t_c_course cc ON cc.id=ct.course_id INNER JOIN  t_c_pdc_detail pd ON ct.teach_id=pd.id  where  FIND_IN_SET(#{id},ct.student_id)  ")
+            public List<Map<String,Object>> findJoin(long id);
+
+
+
+---------------TPdcUserRoleMapper
+                @Select("SELECT pur.user_id,u.alias_name FROM  t_pdc_user_role pur INNER JOIN  t_p_user u ON pur.user_id=u.id  WHERE pur.role_id=#{id}")
+                public List<Map<String,Object>> findRoleUsers(@Param("id") Long id);
+
+
+---------------TPUserMapper
+            @Select("select * from t_p_user where user_name=#{userName}")
+            public  TPUser GetSalt(@Param("userName") String userName);
+ @Select("SELECT pd.id,pd.pdc_name ,p.user_name ,p.alias_name,pd.contact ,pd.gender,pd.education FROM  t_c_pdc_detail pd INNER JOIN  t_p_user p ON p.id=pd.remark")
+    public List<Map<String ,Object>> GetInforMate();
+
+
+
+
+
+//-----------------------
+教室
+资产
+定时任务(升级，数据库创建定时)
+////扫码上课，，课程计时，缴费情况
+////课程管理课程教师上课表
+////论坛(浏览数量汇总)，滚动加载
+////消息通知
+//-----https://www.xiaoruibao.com/ 校瑞宝课件

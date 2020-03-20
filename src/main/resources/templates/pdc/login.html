@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<html>
+
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+ <!-- 自适应 -->
+ <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <title>登峰造極</title>
+ <!--导入这两个文件根据自己的路径进行修改-->
+ <link rel="stylesheet" th:href="@{/layUI/css/layui.css}" >
+ <script  th:src="@{/layUI/layui.js}"></script><br>
+ <style>
+  body{
+   background-image: url("../img/bg.jpg");
+   background-attachment: fixed;
+   background-size: cover;
+   background-repeat: no-repeat;
+  }
+ </style>
+</head>
+<body >
+<div style="text-align: center;">
+ <div class="layui-inline">
+
+  <form class="layui-form" method="get" action="/logininto" ><!--提交给这个controller-->
+   <div class="layui-form-item">
+    <label class="layui-form-label layui-bg-black">用户名</label>
+    <div class="layui-input-inline">
+     <input type="text" name="user_name" required  lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+    </div>
+   </div>
+   <div class="layui-form-item">
+    <label class="layui-form-label layui-bg-black">密码</label>
+    <div class="layui-input-inline">
+     <input type="password" name="user_pass" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+    </div>
+
+   </div>
+
+
+   <div class="layui-form-item">
+    <label class="layui-form-label layui-bg-black">操作</label>
+    <div class="layui-input-block">
+     <button class="layui-btn" lay-submit lay-filter="formDemo">立即登录</button>
+     <input  class="layui-btn layui-btn-normal" type="button" value="注册用户" onclick="window.location.href='/register'" >
+    </div>
+   </div>
+  </form>
+
+ </div>
+</div>
+<script type="text/javascript">
+ // //layui.user(加载使用的模块),我们这里只使用了form,还可以加载table,jquery等等
+ // layui.use('form',function(){
+ //  var form=layui.form;
+ //  //监听form的提交 监听lay-filter
+ //  form.on(submit('formDemo'),function(data){
+ //
+ //  })
+ //
+ //
+ // })
+</script>
+
+</body>
+</html>
+<!--
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+ <title>YOUNG-DEMO</title>
+</head>
+<body>
+
+<form method="get" action="/logininto" >
+ 用户名：<input type="text" name="user_name" id="user_name">
+ <br>
+ 密&nbsp;&nbsp;码：<input type="text" name="user_pass" id="user_pass">
+ <br>
+ <input type="button" value="注册用户" onclick="window.location.href='/register'" >
+ <input type="submit" value="登录">
+
+</form>
+</body>
+</html>-->

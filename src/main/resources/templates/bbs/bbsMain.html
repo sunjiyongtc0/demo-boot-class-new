@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+ <title>登峰造極</title>
+ <link rel="stylesheet" th:href="@{/layUI/css/layui.css}">
+ <script type="text/javascript"   th:src="@{/js/util/jquery.js}"></script>
+ <script type="text/javascript"   th:src="@{/js/util/jquery.min.js}"></script>
+</head>
+<body>
+<table class="layui-table" lay-skin="line">
+ <colgroup>
+  <col >
+  <col width="150">
+  <col width="100">
+ </colgroup>
+ <thead>
+ <tr>
+  <th>提问</th>
+  <th>时间</th>
+  <th>楼主</th>
+ </tr>
+ </thead>
+ <tbody>
+ <c th:each="title: ${lm}" >
+ <tr th:onclick="'javascript:detail('+${title.id}+')'">
+  <td th:text="${title.title_name}">1</td>
+  <td th:text="${title.creat_time}">2</td>
+  <td th:text="${title.alias_name}">3</td>
+ </tr>
+ </c>
+ </tbody>
+</table>
+<script>
+  function detail(id){
+   window.location.href="/bbs/detail/"+id;
+  }
+
+</script>
+</body>
+</html>

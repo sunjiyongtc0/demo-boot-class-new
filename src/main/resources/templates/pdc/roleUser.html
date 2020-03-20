@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+ <title>登峰造極</title>
+ <link rel="stylesheet" th:href="@{/layUI/css/layui.css}">
+ <script type="text/javascript"   th:src="@{/js/util/jquery.js}"></script>
+ <script type="text/javascript"   th:src="@{/js/util/jquery.min.js}"></script>
+ <script type="text/javascript"   th:src="@{/layUI/lay/modules/form.js}"></script>
+ <script type="text/javascript"   th:src="@{/layUI/layui.js}"></script>
+ <script type="text/javascript"   th:src="@{/layUI/layui.all.js}"></script>
+</head>
+<body>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+ <legend>包含用户</legend>
+</fieldset>
+<table class="layui-table" lay-skin="line">
+<colgroup>
+    <col width="100">
+    <col width="200">
+</colgroup>
+ <thead><th>用户ID</th><th>用户名</th></thead>
+    <tbody>
+    <c th:each="r: ${lr}" >
+        <tr><td th:text="${r.user_id}"></td><td th:text="${r.alias_name}"></td></tr>
+    </c>
+    </tbody>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+ <title>登峰造極</title>
+ <link rel="stylesheet" th:href="@{/layUI/css/layui.css}">
+ <script type="text/javascript"   th:src="@{/js/util/jquery.js}"></script>
+ <script type="text/javascript"   th:src="@{/js/util/jquery.min.js}"></script>
+ <script type="text/javascript"   th:src="@{/layUI/lay/modules/form.js}"></script>
+ <script type="text/javascript"   th:src="@{/layUI/layui.js}"></script>
+ <script type="text/javascript"   th:src="@{/layUI/layui.all.js}"></script>
+</head>
+<body>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+ <legend>教师分配</legend>
+</fieldset>
+<form class="layui-form" method="post" action="/teach/addCouerse">
+
+ <input type="hidden" name="Id" th:value="${tcCourse.id}">
+
+ <div class="layui-form-item">
+  <label class="layui-form-label">课程名称：</label>
+  <div class="layui-input-block">
+   <input type="text" name="couerseName" lay-verify="title" class="layui-input" th:value="${tcCourse.couerseName}"  >
+  </div>
+ </div>
+
+ <div class="layui-form-item">
+  <label class="layui-form-label">是否启用：</label>
+  <div class="layui-input-block">
+   <input type="checkbox" checked=""    lay-skin="switch" lay-filter="switchTest" lay-text="ON|OFF">
+  </div>
+ </div>
+ <input type="hidden"  id="flatId" name="flatId" th:value="${tcCourse.flatId}">
+
+ <<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+ <legend>显示搜索框</legend>
+</fieldset>
+
+ <div id="test4" th:name="test4" class="demo-transfer"></div>
+
+ <!--<div class="layui-form-item">-->
+ <!--<label class="layui-form-label">创建用户：</label>-->
+ <!--<div class="layui-input-block">-->
+ <!--<input type="text"   lay-verify="title" autocomplete="off"  class="layui-input" th:value="${user.userName}">-->
+ <!--</div>-->
+ <!--</div>-->
+
+ <!--<input type="hidden" name="userId" id="tcCourse.userId"  th:value="${user.Id}"  >-->
+ <input type="hidden" th:value="${tlist}" id="tlist" name="tlist">
+ <input type="hidden"  id="teachId" name="teachId" >
+ <div class="layui-form-item">
+  <div class="layui-input-block">
+   <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+  </div>
+ </div>
+
+</form>
+
+<script>
+ layui.use(['form', 'layedit', 'laydate'], function(){
+  var form = layui.form
+          ,layer = layui.layer
+          ,layedit = layui.layedit
+          ,laydate = layui.laydate;
+  //监听指定开关
+  form.on('switch(switchTest)', function(data){
+   console.log($("#flatId").val())
+   // this.checked ? data.value=0:data.value=1;
+   if($("#flatId").val()==0){
+    data.value="on";
+   }else{
+    data.value="off";
+   }
+
+  });
+  form.render();
+ });
+</script>
+<script>
+ layui.use(['transfer', 'layer', 'util'], function(){
+  var $ = layui.$
+          ,transfer = layui.transfer
+          ,layer = layui.layer
+          ,util = layui.util;
+
+     var data0=JSON.parse($("#tlist").val());
+  //显示搜索框
+  transfer.render({
+   elem: '#test4'
+   ,id:'tra'//定义唯一索引
+  ,data: data0
+   ,title: ['未分配教师', '已分配教师']
+   ,showSearch: true
+   ,onchange: function(obj, index){
+    var getData =JSON.parse(JSON.stringify(transfer.getData('tra')));
+    var s="";
+    for(var i=0;i<getData.length;i++){
+     var j=getData[i];
+     if(i==getData.length-1){
+      s += j.value;
+     }else {
+      s +=j.value+",";
+     }
+    }
+$("#teachId").val(s);
+    console.log($("#teachId").val())
+   }
+  })
+
+
+// //批量办法定事件
+//   util.event('demo-transfer', {
+//    getData: function(othis){
+//     var getData = transfer.getData('tra'); //获取右侧数据
+//     layer.alert(JSON.stringify(getData));
+//    }
+//
+//   });
+
+ });
+
+</script>
+</body>
+</html>
+
+
+

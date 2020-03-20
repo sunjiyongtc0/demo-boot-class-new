@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+ <title>登峰造極</title>
+ <link rel="stylesheet" th:href="@{/layUI/css/layui.css}">
+ <script type="text/javascript"   th:src="@{/js/util/jquery.js}"></script>
+ <script type="text/javascript"   th:src="@{/js/util/jquery.min.js}"></script>
+ <script type="text/javascript"   th:src="@{/layUI/lay/modules/element.js}"></script>
+ <script type="text/javascript"   th:src="@{/layUI/layui.js}"></script>
+</head>
+<body>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+ <legend th:text="'尊敬的 '+${user.aliasName}+' 用户'">简洁风格的Tab</legend>
+</fieldset>
+
+<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+ <ul class="layui-tab-title">
+  <li class="layui-this">我发的帖</li>
+  <li>我评论的帖</li>
+ </ul>
+ <div class="layui-tab-content" style="height: 100px;">
+  <div class="layui-tab-item layui-show">
+   <button data-method="setTop" class="layui-btn">发帖</button>
+   <table class="layui-table" lay-skin="line">
+    <colgroup>
+     <col >
+     <col width="150">
+     <col width="100">
+    </colgroup>
+    <thead>
+    <tr>
+     <th>提问</th>
+     <th>时间</th>
+     <th>楼主</th>
+    </tr>
+    </thead>
+    <tbody>
+    <c th:each="tc: ${lc}" >
+     <tr th:onclick="'javascript:detail('+${tc.id}+')'">
+      <td th:text="${tc.title_name}">1</td>
+      <td th:text="${tc.creat_time}">2</td>
+      <td th:text="${tc.alias_name}">3</td>
+     </tr>
+    </c>
+    </tbody>
+   </table>
+
+  </div>
+  <div class="layui-tab-item">
+   <table class="layui-table" lay-skin="line">
+    <colgroup>
+     <col >
+     <col width="150">
+     <col width="100">
+    </colgroup>
+    <thead>
+    <tr>
+     <th>提问</th>
+     <th>时间</th>
+     <th>楼主</th>
+    </tr>
+    </thead>
+    <tbody>
+    <c th:each="tj: ${lj}" >
+     <tr th:onclick="'javascript:detail('+${tj.id}+')'">
+      <td th:text="${tj.title_name}">1</td>
+      <td th:text="${tj.creat_time}">2</td>
+      <td th:text="${tj.alias_name}">3</td>
+     </tr>
+    </c>
+    </tbody>
+   </table>
+  </div>
+
+ </div>
+</div>
+<script>
+ layui.use(['element', 'layer'], function(){
+  // var $ = layui.jquery
+  //         ,element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+  var element = layui.element;
+  var layer = layui.layer;
+  //触发事件
+  var active = {
+   tabAdd: function(){
+    //新增一个Tab项
+    element.tabAdd('demo', {
+     title: '新选项'+ (Math.random()*1000|0) //用于演示
+     ,content: '内容'+ (Math.random()*1000|0)
+     ,id: new Date().getTime() //实际使用一般是规定好的id，这里以时间戳模拟下
+    })
+   }
+
+   ,tabChange: function(){
+    //切换到指定Tab项
+    element.tabChange('demo', '22'); //切换到：用户管理
+   }
+
+   //------------发帖
+   ,setTop: function () {
+    var that = this;
+    //多窗口模式，层叠置顶
+    layer.open({
+     type: 2 //此处以iframe举例
+     , title: '发帖'//'当你选择该窗体时，即会在最顶端'
+     , area: ['390px', '260px']
+     , shade: 0
+     , maxmin: true
+     , offset: [ //为了演示，随机坐标
+      0.5* ($(window).height() - 300)
+      , 0.5* ($(window).width() - 390)
+     ]
+     , content: '/userbbs/creatBbs'
+     , btn: ['提交', '全部关闭'] //只是为了演示
+     , yes: function (index, layero) {
+      // 获取弹出框的值
+      var bodys = layer.getChildFrame("body", index);
+      var remark = bodys.find("#remark").val();
+      var titleName = bodys.find("#title_name").val();
+      $.post('/userbbs/addSave',{ 'remark': remark,'titleName':titleName}, function(data) {
+       if(data.message=="ok"){
+        layer.closeAll();
+       }else{
+        alert("提交失败")
+       }
+
+      })
+
+     }
+     , btn2: function () {
+      layer.closeAll();
+     }
+
+     , zIndex: layer.zIndex //重点1
+     , success: function (layero) {
+      layer.setTop(layero); //重点2
+     }
+    });
+   }
+   //-------------
+  };
+  $('.layui-btn').on('click', function(){
+   var othis = $(this), method = othis.data('method');
+   active[method] ? active[method].call(this, othis) : '';
+  });
+
+
+
+  $('.site-demo-active').on('click', function(){
+   var othis = $(this), type = othis.data('type');
+   active[type] ? active[type].call(this, othis) : '';
+  });
+
+  element.on('tab(test)', function(elem){
+   location.hash = 'test='+ $(this).attr('lay-id');
+  });
+
+ });
+</script>
+<script>
+ function detail(id){
+  window.location.href="/bbs/detail/"+id;
+ }
+
+</script>
+</body>
+</html>

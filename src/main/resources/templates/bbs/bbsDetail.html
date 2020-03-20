@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+ <title>登峰造極</title>
+ <link rel="stylesheet" th:href="@{/layUI/css/layui.css}">
+ <script type="text/javascript"   th:src="@{/js/util/jquery.js}"></script>
+ <script type="text/javascript"   th:src="@{/js/util/jquery.min.js}"></script>
+ <script type="text/javascript"   th:src="@{/layUI/lay/modules/element.js}"></script>
+ <script type="text/javascript"   th:src="@{/layUI/layui.js}"></script>
+
+</head>
+<body>
+<input type="hidden" th:value="${tbt.Id}" id="titleId">
+<div class="layui-collapse">
+ <div class="layui-colla-item">
+  <h2  id="title" class="layui-colla-title" th:value="${tbt.titleName}" th:text="${tbt.titleName}"></h2>
+  <div class="layui-colla-content layui-show" th:text="${tbt.remark}"></div>
+ </div>
+ <div class="layui-colla-item">
+  <h2 class="layui-colla-title">创建时间</h2>
+  <div class="layui-colla-content layui-show"><span th:text="${tbt.creatTime}"></span></div>
+ </div>
+ <div class="layui-colla-item">
+  <h2 class="layui-colla-title" th:text=" '跟帖数量:'+${returnCount}"></h2>
+  <div class="layui-colla-content layui-show">浏览数量</div>
+ </div>
+</div>
+
+
+<hr class="layui-bg-green">
+<button data-method="setTop" class="layui-btn">回复帖子</button>
+<table class="layui-table" lay-even lay-skin="nob">
+ <colgroup>
+  <col >
+  <col width="150">
+  <col width="100">
+ </colgroup>
+ <thead>
+ <tr>
+  <th>解答</th>
+  <th>时间</th>
+  <th>跟帖</th>
+ </tr>
+ </thead>
+ <tbody>
+ <c th:each="title: ${lm}" >
+ <tr>
+  <td th:text="${title.remark}">1</td>
+  <td th:text="${title.creat_time}">2</td>
+  <td th:text="${title.alias_name}">3</td>
+ </tr>
+ </c>
+ </tbody>
+</table>
+
+<script>
+ layui.use(['element', 'layer'], function(){
+  var element = layui.element;
+  var layer = layui.layer;
+
+  //监听折叠
+  element.on('collapse(test)', function(data){
+   layer.msg('展开状态：'+ data.show);
+  });
+
+
+  //触发事件
+  var active = {
+
+   setTop: function () {
+    var titleId=$("#titleId").val();
+    var that = this;
+    //多窗口模式，层叠置顶
+    layer.open({
+     type: 2 //此处以iframe举例
+     , title: '跟帖'//'当你选择该窗体时，即会在最顶端'
+     , area: ['390px', '260px']
+     , shade: 0
+     , maxmin: true
+     , offset: [ //为了演示，随机坐标
+      0.5* ($(window).height() - 300)
+      , 0.5* ($(window).width() - 390)
+     ]
+     , content: '/bbs/bbsAdd'
+     , btn: ['提交评论', '全部关闭'] //只是为了演示
+     , yes: function (index, layero) {
+     // 获取弹出框的值
+      var bodys = layer.getChildFrame("body", index);
+      var datas = bodys.find("#remark").val();
+
+      $.post('/bbs/addSave',{ 'remark': datas,'titleId':titleId}, function(data) {
+       if(data.message=="ok"){
+        layer.closeAll();
+       }else{
+         alert("提交失败")
+        }
+
+      })
+
+     }
+     , btn2: function () {
+      layer.closeAll();
+     }
+
+     , zIndex: layer.zIndex //重点1
+     , success: function (layero) {
+      layer.setTop(layero); //重点2
+     }
+    });
+   }
+  }
+  $('.layui-btn').on('click', function(){
+   var othis = $(this), method = othis.data('method');
+   active[method] ? active[method].call(this, othis) : '';
+  });
+ });
+</script>
+</body>
+</html>

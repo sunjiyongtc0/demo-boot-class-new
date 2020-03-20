@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sunjy.secret.boot.mapper.TPUserMapper">
+  <resultMap id="BaseResultMap" type="com.sunjy.secret.boot.domain.TPUser">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="salt" jdbcType="VARCHAR" property="salt" />
+    <result column="user_pass" jdbcType="VARCHAR" property="userPass" />
+    <result column="role_id" jdbcType="BIGINT" property="roleId" />
+    <result column="creat_time" jdbcType="TIME" property="creatTime" />
+    <result column="update_time" jdbcType="TIME" property="updateTime" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="alias_name" jdbcType="VARCHAR" property="aliasName" />
+  </resultMap>
+</mapper>
